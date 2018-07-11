@@ -1,0 +1,11 @@
+server:
+  port: 8088
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+image:
+  path: C:\Users\moshenglei\Desktop\Images\
