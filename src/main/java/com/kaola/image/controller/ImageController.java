@@ -3,6 +3,7 @@ package com.kaola.image.controller;
 import com.kaola.image.bean.Image;
 import com.kaola.image.bean.Response;
 import com.kaola.image.util.DateUtil;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -63,6 +66,22 @@ public class ImageController {
             Files.copy(file.toPath(), outputStream);
         }
 
+    }
+
+
+
+    @RequestMapping(value = "/scale")
+    @ResponseBody
+    public Object scale() throws Exception {
+
+        File file = new File("C:\\Users\\moshenglei\\Desktop\\11.jpg");
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        Thumbnails.of(new FileInputStream(file))
+                .scale(1f)
+                .outputQuality(0.25f)
+                .toOutputStream(os);
+        return os.toByteArray();
     }
 
 
