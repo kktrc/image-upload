@@ -57,10 +57,12 @@ public class ImageController {
                 + filePath
         );
 
-        OutputStream outputStream = response.getOutputStream();
+        try (OutputStream outputStream = response.getOutputStream()) {
 
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        Files.copy(file.toPath(), outputStream);
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            Files.copy(file.toPath(), outputStream);
+        }
+
     }
 
 

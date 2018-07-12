@@ -32,14 +32,10 @@ public class DateUtil {
                     System.out.println("put new sdf of pattern " + pattern + " to map");
 
                     // 这里是关键,使用ThreadLocal<SimpleDateFormat>替代原来直接new SimpleDateFormat
-                    tl = new ThreadLocal<SimpleDateFormat>() {
-
-                        @Override
-                        protected SimpleDateFormat initialValue() {
-                            System.out.println("thread: " + Thread.currentThread() + " init pattern: " + pattern);
-                            return new SimpleDateFormat(pattern);
-                        }
-                    };
+                    tl = ThreadLocal.withInitial(() -> {
+                        System.out.println("thread: " + Thread.currentThread() + " init pattern: " + pattern);
+                        return new SimpleDateFormat(pattern);
+                    });
                     sdfMap.put(pattern, tl);
                 }
             }
